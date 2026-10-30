@@ -58,8 +58,7 @@ by_day = by_day.rename_axis("日付").reset_index(name="売上")
 by_day["日付"] = by_day["日付"].dt.strftime("%m/%d")
 
 returns_list = returns[["注文番号", "注文日", "商品名", "数量", "小計"]].copy()
-returns_list["注文日"] = returns_list["注文日"].dt.strftime("%Y/%m/%d")
-
+returns_list["注文日"] = pd.to_datetime(returns_list["注文日"]).dt.strftime("%Y/%m/%d")
 # ③ Excelに書き出す（シートごとに表を置く）
 Path("report").mkdir(exist_ok=True)
 out = f"report/売上レポート_{YEAR}年{MONTH}月.xlsx"

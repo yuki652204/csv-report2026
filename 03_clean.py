@@ -95,7 +95,7 @@ for i in df[mismatch].index.difference(list(checked)):
 # ⑧ 重複を1行にまとめる
 dup = df.duplicated()
 for i in df[dup].index:
-    log.append([df.at[i, "注文番号"], "重複行を削除（森さん確認済み）"])
+    log.append([df.at[i, "注文番号"], "重複行を削除（CSVの出力不具合として1行にまとめるルール：2026年10月 ○○さんと合意）"])
 df = df[~dup]
 
 # ⑨ 対象月以外を除く
