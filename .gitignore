@@ -1,0 +1,6 @@
+# 仮想環境（requirements.txt から作り直せる）
+.venv/
+
+# 顧客データ（個人情報のため絶対に入れない）
+input/
+output/
