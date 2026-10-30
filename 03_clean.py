@@ -1,13 +1,23 @@
 import re
+
+import sys
 from pathlib import Path
 import unicodedata
 
 import pandas as pd
 
-SRC = "input/orders_202610.csv"
+# 対象のCSVを決める：指定があればそれ、なければ input の中でいちばん新しい月
+if len(sys.argv) > 1:
+    SRC = sys.argv[1]
+else:
+    files = sorted(Path("input").glob("orders_*.csv"))
+    if not files:
+        sys.exit("input フォルダに orders_YYYYMM.csv が見つかりません")
+    SRC = str(files[-1])
+print(f"対象ファイル：{SRC}")
 
 # ファイル名から「年」と「月」を取り出す（orders_202610 → 2026年10月）
-m = re.search(r"(\d{4})(\d{2})", SRC)
+m = re.search(r"orders_(\d{4})(\d{2})", SRC)
 YEAR, MONTH = int(m.group(1)), int(m.group(2))
 
 df = pd.read_csv(SRC, encoding="cp932", dtype=str)

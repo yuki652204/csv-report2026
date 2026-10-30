@@ -1,10 +1,18 @@
 from pathlib import Path
-
+import sys
 import pandas as pd
 from openpyxl.chart import LineChart, Reference
 from openpyxl.styles import Font, PatternFill
 
-YM = "202610"
+# 対象の年月を決める：指定があればそれ、なければ output の中でいちばん新しい月
+if len(sys.argv) > 1:
+    YM = sys.argv[1]
+else:
+    files = sorted(Path("output").glob("sales_*.csv"))
+    if not files:
+        sys.exit("output フォルダに sales_YYYYMM.csv がありません。先に 03_clean.py を実行してください")
+    YM = files[-1].stem.split("_")[1]  # sales_202610 → 202610
+
 YEAR, MONTH = int(YM[:4]), int(YM[4:])
 
 # ① 3-Bで作ったきれいなデータを読む
